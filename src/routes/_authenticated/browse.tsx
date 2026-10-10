@@ -77,8 +77,8 @@ function BrowsePage() {
       return;
     }
     const donation = data?.[0];
-    if (error || !donation) {
-      toast.error(error?.message ?? "Another NGO already claimed this donation.");
+    if (!donation) {
+      toast.error("Another NGO already claimed this donation.");
       void queryClient.invalidateQueries({ queryKey: ["available-donations"] });
       return;
     }
