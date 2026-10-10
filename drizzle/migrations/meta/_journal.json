@@ -1,0 +1,27 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1791604921220,
+      "tag": "0000_foodloop_schema",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1791604982314,
+      "tag": "0001_donation_images_storage_policies",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1791605219114,
+      "tag": "0002_volunteer_open_tasks",
+      "breakpoints": true
+    }
+  ]
+}
