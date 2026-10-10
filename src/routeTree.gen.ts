@@ -15,9 +15,11 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as FoodSafetyRouteImport } from './routes/food-safety'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as AuthenticatedBrowseRouteImport } from './routes/_authenticated/browse'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedDonateRouteImport } from './routes/_authenticated/donate'
 import { Route as AuthenticatedMyDonationsRouteImport } from './routes/_authenticated/my-donations'
+import { Route as AuthenticatedTasksRouteImport } from './routes/_authenticated/tasks'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -48,6 +50,11 @@ const HowItWorksRoute = HowItWorksRouteImport.update({
   path: '/how-it-works',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedBrowseRoute = AuthenticatedBrowseRouteImport.update({
+  id: '/browse',
+  path: '/browse',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -64,6 +71,11 @@ const AuthenticatedMyDonationsRoute =
     path: '/my-donations',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedTasksRoute = AuthenticatedTasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -71,9 +83,11 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/food-safety': typeof FoodSafetyRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/browse': typeof AuthenticatedBrowseRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/donate': typeof AuthenticatedDonateRoute
   '/my-donations': typeof AuthenticatedMyDonationsRoute
+  '/tasks': typeof AuthenticatedTasksRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -81,9 +95,11 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/food-safety': typeof FoodSafetyRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/browse': typeof AuthenticatedBrowseRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/donate': typeof AuthenticatedDonateRoute
   '/my-donations': typeof AuthenticatedMyDonationsRoute
+  '/tasks': typeof AuthenticatedTasksRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -93,9 +109,11 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/food-safety': typeof FoodSafetyRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/_authenticated/browse': typeof AuthenticatedBrowseRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/donate': typeof AuthenticatedDonateRoute
   '/_authenticated/my-donations': typeof AuthenticatedMyDonationsRoute
+  '/_authenticated/tasks': typeof AuthenticatedTasksRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -105,9 +123,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/food-safety'
     | '/how-it-works'
+    | '/browse'
     | '/dashboard'
     | '/donate'
     | '/my-donations'
+    | '/tasks'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -115,9 +135,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/food-safety'
     | '/how-it-works'
+    | '/browse'
     | '/dashboard'
     | '/donate'
     | '/my-donations'
+    | '/tasks'
   id:
     | '__root__'
     | '/'
@@ -126,9 +148,11 @@ export interface FileRouteTypes {
     | '/auth'
     | '/food-safety'
     | '/how-it-works'
+    | '/_authenticated/browse'
     | '/_authenticated/dashboard'
     | '/_authenticated/donate'
     | '/_authenticated/my-donations'
+    | '/_authenticated/tasks'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -184,6 +208,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HowItWorksRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/browse': {
+      id: '/_authenticated/browse'
+      path: '/browse'
+      fullPath: '/browse'
+      preLoaderRoute: typeof AuthenticatedBrowseRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/dashboard': {
       id: '/_authenticated/dashboard'
       path: '/dashboard'
@@ -205,19 +236,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedMyDonationsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/tasks': {
+      id: '/_authenticated/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof AuthenticatedTasksRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedBrowseRoute: typeof AuthenticatedBrowseRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDonateRoute: typeof AuthenticatedDonateRoute
   AuthenticatedMyDonationsRoute: typeof AuthenticatedMyDonationsRoute
+  AuthenticatedTasksRoute: typeof AuthenticatedTasksRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedBrowseRoute: AuthenticatedBrowseRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDonateRoute: AuthenticatedDonateRoute,
   AuthenticatedMyDonationsRoute: AuthenticatedMyDonationsRoute,
+  AuthenticatedTasksRoute: AuthenticatedTasksRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
