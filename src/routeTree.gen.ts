@@ -10,18 +10,32 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as FoodSafetyRouteImport } from './routes/food-safety'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
+import { Route as AuthenticatedDonateRouteImport } from './routes/_authenticated/donate'
+import { Route as AuthenticatedMyDonationsRouteImport } from './routes/_authenticated/my-donations'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const FoodSafetyRoute = FoodSafetyRouteImport.update({
@@ -34,37 +48,94 @@ const HowItWorksRoute = HowItWorksRouteImport.update({
   path: '/how-it-works',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedDonateRoute = AuthenticatedDonateRouteImport.update({
+  id: '/donate',
+  path: '/donate',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMyDonationsRoute =
+  AuthenticatedMyDonationsRouteImport.update({
+    id: '/my-donations',
+    path: '/my-donations',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/food-safety': typeof FoodSafetyRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/donate': typeof AuthenticatedDonateRoute
+  '/my-donations': typeof AuthenticatedMyDonationsRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/food-safety': typeof FoodSafetyRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/dashboard': typeof AuthenticatedDashboardRoute
+  '/donate': typeof AuthenticatedDonateRoute
+  '/my-donations': typeof AuthenticatedMyDonationsRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/about': typeof AboutRoute
+  '/auth': typeof AuthRoute
   '/food-safety': typeof FoodSafetyRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/donate': typeof AuthenticatedDonateRoute
+  '/_authenticated/my-donations': typeof AuthenticatedMyDonationsRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/food-safety' | '/how-it-works'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/food-safety'
+    | '/how-it-works'
+    | '/dashboard'
+    | '/donate'
+    | '/my-donations'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/food-safety' | '/how-it-works'
-  id: '__root__' | '/' | '/about' | '/food-safety' | '/how-it-works'
+  to:
+    | '/'
+    | '/about'
+    | '/auth'
+    | '/food-safety'
+    | '/how-it-works'
+    | '/dashboard'
+    | '/donate'
+    | '/my-donations'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/about'
+    | '/auth'
+    | '/food-safety'
+    | '/how-it-works'
+    | '/_authenticated/dashboard'
+    | '/_authenticated/donate'
+    | '/_authenticated/my-donations'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   AboutRoute: typeof AboutRoute
+  AuthRoute: typeof AuthRoute
   FoodSafetyRoute: typeof FoodSafetyRoute
   HowItWorksRoute: typeof HowItWorksRoute
 }
@@ -78,11 +149,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/about': {
       id: '/about'
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/food-safety': {
@@ -99,12 +184,50 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HowItWorksRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/dashboard': {
+      id: '/_authenticated/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof AuthenticatedDashboardRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/donate': {
+      id: '/_authenticated/donate'
+      path: '/donate'
+      fullPath: '/donate'
+      preLoaderRoute: typeof AuthenticatedDonateRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/my-donations': {
+      id: '/_authenticated/my-donations'
+      path: '/my-donations'
+      fullPath: '/my-donations'
+      preLoaderRoute: typeof AuthenticatedMyDonationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedDonateRoute: typeof AuthenticatedDonateRoute
+  AuthenticatedMyDonationsRoute: typeof AuthenticatedMyDonationsRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedDonateRoute: AuthenticatedDonateRoute,
+  AuthenticatedMyDonationsRoute: AuthenticatedMyDonationsRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   AboutRoute: AboutRoute,
+  AuthRoute: AuthRoute,
   FoodSafetyRoute: FoodSafetyRoute,
   HowItWorksRoute: HowItWorksRoute,
 }
