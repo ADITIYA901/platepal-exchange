@@ -15,9 +15,12 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as FoodSafetyRouteImport } from './routes/food-safety'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedBrowseRouteImport } from './routes/_authenticated/browse'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedDonateRouteImport } from './routes/_authenticated/donate'
+import { Route as AuthenticatedImpactRouteImport } from './routes/_authenticated/impact'
+import { Route as AuthenticatedMapRouteImport } from './routes/_authenticated/map'
 import { Route as AuthenticatedMyDonationsRouteImport } from './routes/_authenticated/my-donations'
 import { Route as AuthenticatedTasksRouteImport } from './routes/_authenticated/tasks'
 
@@ -50,6 +53,11 @@ const HowItWorksRoute = HowItWorksRouteImport.update({
   path: '/how-it-works',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedBrowseRoute = AuthenticatedBrowseRouteImport.update({
   id: '/browse',
   path: '/browse',
@@ -63,6 +71,16 @@ const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
 const AuthenticatedDonateRoute = AuthenticatedDonateRouteImport.update({
   id: '/donate',
   path: '/donate',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedImpactRoute = AuthenticatedImpactRouteImport.update({
+  id: '/impact',
+  path: '/impact',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedMapRoute = AuthenticatedMapRouteImport.update({
+  id: '/map',
+  path: '/map',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
 const AuthenticatedMyDonationsRoute =
@@ -83,9 +101,12 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/food-safety': typeof FoodSafetyRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/browse': typeof AuthenticatedBrowseRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/donate': typeof AuthenticatedDonateRoute
+  '/impact': typeof AuthenticatedImpactRoute
+  '/map': typeof AuthenticatedMapRoute
   '/my-donations': typeof AuthenticatedMyDonationsRoute
   '/tasks': typeof AuthenticatedTasksRoute
 }
@@ -95,9 +116,12 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/food-safety': typeof FoodSafetyRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/browse': typeof AuthenticatedBrowseRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/donate': typeof AuthenticatedDonateRoute
+  '/impact': typeof AuthenticatedImpactRoute
+  '/map': typeof AuthenticatedMapRoute
   '/my-donations': typeof AuthenticatedMyDonationsRoute
   '/tasks': typeof AuthenticatedTasksRoute
 }
@@ -109,9 +133,12 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/food-safety': typeof FoodSafetyRoute
   '/how-it-works': typeof HowItWorksRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/browse': typeof AuthenticatedBrowseRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/donate': typeof AuthenticatedDonateRoute
+  '/_authenticated/impact': typeof AuthenticatedImpactRoute
+  '/_authenticated/map': typeof AuthenticatedMapRoute
   '/_authenticated/my-donations': typeof AuthenticatedMyDonationsRoute
   '/_authenticated/tasks': typeof AuthenticatedTasksRoute
 }
@@ -123,9 +150,12 @@ export interface FileRouteTypes {
     | '/auth'
     | '/food-safety'
     | '/how-it-works'
+    | '/admin'
     | '/browse'
     | '/dashboard'
     | '/donate'
+    | '/impact'
+    | '/map'
     | '/my-donations'
     | '/tasks'
   fileRoutesByTo: FileRoutesByTo
@@ -135,9 +165,12 @@ export interface FileRouteTypes {
     | '/auth'
     | '/food-safety'
     | '/how-it-works'
+    | '/admin'
     | '/browse'
     | '/dashboard'
     | '/donate'
+    | '/impact'
+    | '/map'
     | '/my-donations'
     | '/tasks'
   id:
@@ -148,9 +181,12 @@ export interface FileRouteTypes {
     | '/auth'
     | '/food-safety'
     | '/how-it-works'
+    | '/_authenticated/admin'
     | '/_authenticated/browse'
     | '/_authenticated/dashboard'
     | '/_authenticated/donate'
+    | '/_authenticated/impact'
+    | '/_authenticated/map'
     | '/_authenticated/my-donations'
     | '/_authenticated/tasks'
   fileRoutesById: FileRoutesById
@@ -208,6 +244,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof HowItWorksRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/browse': {
       id: '/_authenticated/browse'
       path: '/browse'
@@ -229,6 +272,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedDonateRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/impact': {
+      id: '/_authenticated/impact'
+      path: '/impact'
+      fullPath: '/impact'
+      preLoaderRoute: typeof AuthenticatedImpactRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/map': {
+      id: '/_authenticated/map'
+      path: '/map'
+      fullPath: '/map'
+      preLoaderRoute: typeof AuthenticatedMapRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/my-donations': {
       id: '/_authenticated/my-donations'
       path: '/my-donations'
@@ -247,17 +304,23 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedBrowseRoute: typeof AuthenticatedBrowseRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedDonateRoute: typeof AuthenticatedDonateRoute
+  AuthenticatedImpactRoute: typeof AuthenticatedImpactRoute
+  AuthenticatedMapRoute: typeof AuthenticatedMapRoute
   AuthenticatedMyDonationsRoute: typeof AuthenticatedMyDonationsRoute
   AuthenticatedTasksRoute: typeof AuthenticatedTasksRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedBrowseRoute: AuthenticatedBrowseRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedDonateRoute: AuthenticatedDonateRoute,
+  AuthenticatedImpactRoute: AuthenticatedImpactRoute,
+  AuthenticatedMapRoute: AuthenticatedMapRoute,
   AuthenticatedMyDonationsRoute: AuthenticatedMyDonationsRoute,
   AuthenticatedTasksRoute: AuthenticatedTasksRoute,
 }
