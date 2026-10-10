@@ -37,7 +37,7 @@ function MapPage() {
           Donation pickup points and NGO locations around Bengaluru (demonstration data; not live GPS tracking).
         </p>
         <div className="mt-6">
-          <DonationMap donations={donations.data} ngos={ngos.data} height="560px" />
+          <DonationMap donations={donations.data ?? []} ngos={ngos.data ?? []} height="560px" />
         </div>
       </main>
     </div>

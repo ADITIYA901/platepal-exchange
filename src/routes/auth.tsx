@@ -14,8 +14,8 @@ import {
 } from "@/components/ui/select";
 
 export const Route = createFileRoute("/auth")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    mode: search.mode === "register" ? ("register" as const) : ("login" as const),
+  validateSearch: (search: Record<string, unknown>): { mode?: "register" | "login" } => ({
+    mode: search["mode"] === "register" ? "register" : "login",
   }),
   head: () => ({
     meta: [

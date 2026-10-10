@@ -76,12 +76,12 @@ function BrowsePage() {
       toast.error(error.message);
       return;
     }
-    if (!data || data.length === 0) {
-      toast.error("Another NGO already claimed this donation.");
+    const donation = data?.[0];
+    if (error || !donation) {
+      toast.error(error?.message ?? "Another NGO already claimed this donation.");
       void queryClient.invalidateQueries({ queryKey: ["available-donations"] });
       return;
     }
-    const donation = data[0];
     await supabase.from("pickup_tasks").insert({ donation_id: id, ngo_id: userId });
     await supabase.from("notifications").insert({
       user_id: donation.donor_id,
